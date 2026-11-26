@@ -1,111 +1,157 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>adatacutiRPO</title>
-
-<style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 20px;
-  background: #fff0e5;
-  font-family: Arial, sans-serif;
-  color: #222;
-}
-
-.container {
-  max-width: 420px;
-  margin: 25px auto;
-  text-align: center;
-}
-
-.logo {
-  width: 64px;
-  height: 64px;
-  margin: auto;
-  border-radius: 50%;
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #07558c;
-  font-weight: bold;
-  font-size: 15px;
-}
-
-h2 {
-  font-size: 19px;
-  margin: 18px 0 5px;
-}
-
-.description {
-  font-size: 13px;
-  line-height: 1.6;
-  margin-bottom: 25px;
-}
-
-.months {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.month {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 47px;
-  border: 1px solid #d2bdb0;
-  border-radius: 30px;
-  color: #222;
-  text-decoration: none;
-  font-size: 14px;
-  transition: 0.2s;
-}
-
-.month:hover {
-  background: #f7dfcf;
-  border-color: #a98c7b;
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#12365a">
+  <title>Informasi Cuti Pegawai | RPO</title>
+  <style>
+    :root{
+      --navy:#12365a;--navy2:#1b4c78;--blue:#2f6f9f;--gold:#d9b66f;
+      --ink:#172b3d;--muted:#647789;--line:#e3eaf0;--bg:#f3f6f9;
+      --white:#fff;--soft:#eaf1f7;--shadow:0 18px 45px rgba(17,48,76,.09);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    a{color:inherit;text-decoration:none}
+    .topline{height:5px;background:linear-gradient(90deg,var(--gold),#f1dfb5,var(--gold))}
+    .nav{background:var(--white);border-bottom:1px solid var(--line)}
+    .nav-inner{max-width:1160px;margin:auto;padding:17px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand-mark{width:45px;height:45px;border-radius:13px;background:var(--navy);display:grid;place-items:center;color:#fff;font-size:22px;box-shadow:0 7px 18px #12365a2b}
+    .brand strong{display:block;font-size:14px;letter-spacing:.08em;color:var(--navy)}
+    .brand small{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+    .nav-label{font-size:13px;color:var(--muted);font-weight:600}
+    .wrap{max-width:1160px;margin:0 auto;padding:34px 24px 60px}
+    .hero{position:relative;overflow:hidden;background:linear-gradient(115deg,#103253 0%,#1a507d 68%,#27648e 100%);border-radius:24px;padding:42px 44px;color:#fff;box-shadow:var(--shadow)}
+    .hero:after{content:"";position:absolute;width:340px;height:340px;border:1px solid #ffffff24;border-radius:50%;right:-90px;top:-170px;box-shadow:0 0 0 35px #ffffff09,0 0 0 75px #ffffff07}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;color:#f0d9a8;font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+    .eyebrow:before{content:"";width:22px;height:2px;background:var(--gold)}
+    h1{font-size:clamp(30px,4vw,46px);line-height:1.12;letter-spacing:-.035em;margin:17px 0 12px;max-width:650px}
+    .hero p{margin:0;max-width:600px;color:#dce8f1;line-height:1.7;font-size:15px}
+    .hero-note{display:flex;align-items:center;gap:10px;margin-top:27px;color:#f4e7ca;font-size:12px;font-weight:600}
+    .hero-note span{width:28px;height:28px;border:1px solid #ffffff44;border-radius:9px;display:grid;place-items:center}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:36px 0 17px}
+    .section-head h2{margin:0;color:var(--navy);font-size:22px;letter-spacing:-.02em}
+    .section-head p{margin:6px 0 0;color:var(--muted);font-size:13px}
+    .period-count{background:#e7eef5;color:var(--navy);padding:8px 12px;border-radius:30px;font-size:12px;font-weight:700;white-space:nowrap}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .period{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;align-items:center;gap:14px;min-height:91px;transition:.2s;box-shadow:0 3px 12px #183a5510}
+    .period.available{cursor:pointer}
+    .period.available:hover{transform:translateY(-3px);border-color:#a9bfd2;box-shadow:0 12px 26px #183a5518}
+    .cal{width:46px;height:46px;flex:0 0 46px;border-radius:13px;background:var(--soft);display:grid;place-items:center;color:var(--blue)}
+    .cal svg{width:22px;height:22px}
+    .period-info{min-width:0;flex:1}
+    .period-info strong{display:block;font-size:14px;color:var(--navy)}
+    .period-info small{display:block;color:var(--muted);font-size:11px;margin-top:5px}
+    .status{font-size:10px;font-weight:800;padding:6px 8px;border-radius:30px;white-space:nowrap;background:#f0f2f4;color:#7a8791}
+    .available .status{background:#e8f5ee;color:#28764a}
+    .arrow{color:#7890a3;font-size:19px;margin-left:2px}
+    .info-row{display:grid;grid-template-columns:1.25fr 1fr;gap:15px;margin-top:30px}
+    .info-card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:21px}
+    .info-card h3{margin:0 0 8px;color:var(--navy);font-size:15px}
+    .info-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.7}
+    .info-icon{width:34px;height:34px;border-radius:10px;background:#f7f1e5;color:#9a7434;display:grid;place-items:center;margin-bottom:13px}
+    .footer{border-top:1px solid var(--line);margin-top:42px;padding-top:20px;display:flex;justify-content:space-between;gap:12px;color:#81909c;font-size:11px}
+    .footer strong{color:#52687a}
+    @media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding:34px 28px}.info-row{grid-template-columns:1fr}}
+    @media(max-width:520px){.nav-inner{padding:13px 17px}.nav-label{display:none}.wrap{padding:22px 16px 42px}.hero{padding:29px 23px;border-radius:19px}.grid{grid-template-columns:1fr;gap:10px}.period{min-height:78px;padding:14px}.section-head{align-items:start;flex-direction:column}.footer{flex-direction:column}}
+  </style>
 </head>
-
 <body>
+  <div class="topline"></div>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">⌂</div>
+        <div><strong>PORTAL INFORMASI RPO</strong><small>Direktorat Registrasi Pangan Olahan</small></div>
+      </div>
+      <div class="nav-label">PUSAT INFORMASI CUTI PEGAWAI</div>
+    </div>
+  </header>
 
-<div class="container">
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Layanan Informasi Pegawai</div>
+      <h1>Informasi Cuti<br>Pegawai RPO</h1>
+      <p>Selamat datang di portal informasi cuti pegawai Direktorat Registrasi Pangan Olahan. Pilih periode untuk membuka dokumen informasi dan pemetaan cuti yang tersedia.</p>
+      <div class="hero-note"><span>▦</span> Informasi periode cuti dalam satu halaman</div>
+    </section>
 
-  <div class="logo">BPOM</div>
+    <section aria-labelledby="period-title">
+      <div class="section-head">
+        <div><h2 id="period-title">Akses Informasi Cuti</h2><p>Pilih periode di bawah ini untuk membuka spreadsheet terkait.</p></div>
+        <div class="period-count" id="count">1 tautan tersedia</div>
+      </div>
+      <div class="grid" id="period-list"></div>
+    </section>
 
-  <h2>adatacutiRPO</h2>
+    <section class="info-row">
+      <article class="info-card">
+        <div class="info-icon">ⓘ</div>
+        <h3>Petunjuk Penggunaan</h3>
+        <p>Pilih tombol periode cuti untuk membuka dokumen pada Google Spreadsheet. Pastikan Anda menggunakan akun yang memiliki izin akses terhadap dokumen tersebut.</p>
+      </article>
+      <article class="info-card">
+        <div class="info-icon">✉</div>
+        <h3>Informasi dan Bantuan</h3>
+        <p>Jika tautan tidak dapat dibuka atau membutuhkan informasi lebih lanjut, silakan hubungi pengelola administrasi cuti di unit kerja.</p>
+      </article>
+    </section>
 
-  <div class="description">
-    mapping cuti pegawai Direktorat<br>
-    Registrasi Pangan Olahan.
-  </div>
+    <footer class="footer">
+      <span><strong>Portal Informasi Cuti RPO</strong><br>Direktorat Registrasi Pangan Olahan</span>
+      <span>Halaman informasi pegawai</span>
+    </footer>
+  </main>
 
-  <div class="months">
+  <script>
+    /*
+      DAFTAR TAUTAN SEMENTARA:
+      Masukkan nama periode dan URL spreadsheet di bagian ini.
+      Pada tahap berikutnya, daftar ini akan dihubungkan ke Google Sheets
+      agar pengelola dapat menambah tautan tanpa mengubah kode website.
+    */
+    const periodeCuti = [
+      { nama: "Periode tersedia", keterangan: "Ganti dengan nama periode", url: "" }
+    ];
 
-    <a class="month" href="LINK_SPREADSHEET_JANUARI">Januari</a>
-    <a class="month" href="LINK_SPREADSHEET_FEBRUARI">Februari</a>
-    <a class="month" href="LINK_SPREADSHEET_MARET">Maret</a>
-    <a class="month" href="LINK_SPREADSHEET_APRIL">April</a>
-    <a class="month" href="LINK_SPREADSHEET_MEI">Mei</a>
-    <a class="month" href="LINK_SPREADSHEET_JUNI">Juni</a>
-    <a class="month" href="LINK_SPREADSHEET_JULI">Juli</a>
-    <a class="month" href="LINK_SPREADSHEET_AGUSTUS">Agustus</a>
-    <a class="month" href="LINK_SPREADSHEET_SEPTEMBER">September</a>
-    <a class="month" href="LINK_SPREADSHEET_OKTOBER">Oktober</a>
-    <a class="month" href="LINK_SPREADSHEET_NOVEMBER">November</a>
-    <a class="month" href="LINK_SPREADSHEET_DESEMBER">Desember</a>
+    const iconCalendar = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>';
 
-  </div>
-</div>
+    function renderPeriode(){
+      const list = document.getElementById("period-list");
+      const valid = periodeCuti.filter(item => item.url && item.url.trim());
+      document.getElementById("count").textContent = valid.length + " tautan tersedia";
+      list.innerHTML = "";
 
+      if (periodeCuti.length === 0) {
+        list.innerHTML = '<div class="period"><div class="period-info"><strong>Belum ada informasi</strong><small>Tautan periode akan ditampilkan di sini.</small></div></div>';
+        return;
+      }
+
+      periodeCuti.forEach(item => {
+        const hasLink = Boolean(item.url && item.url.trim());
+        const card = document.createElement("a");
+        card.className = "period" + (hasLink ? " available" : "");
+        if (hasLink) {
+          card.href = item.url;
+          card.target = "_blank";
+          card.rel = "noopener noreferrer";
+          card.setAttribute("aria-label", "Buka " + item.nama);
+        } else {
+          card.href = "#";
+          card.addEventListener("click", event => event.preventDefault());
+        }
+        card.innerHTML = '<div class="cal">' + iconCalendar + '</div>' +
+          '<div class="period-info"><strong></strong><small></small></div>' +
+          '<span class="status"></span>' + (hasLink ? '<span class="arrow">›</span>' : '');
+        card.querySelector(".period-info strong").textContent = item.nama;
+        card.querySelector(".period-info small").textContent = item.keterangan || "Dokumen informasi cuti";
+        card.querySelector(".status").textContent = hasLink ? "TERSEDIA" : "BELUM TERSEDIA";
+        list.appendChild(card);
+      });
+    }
+    renderPeriode();
+  </script>
 </body>
 </html>
