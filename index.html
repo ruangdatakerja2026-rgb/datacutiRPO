@@ -35,6 +35,9 @@
     .section-head h2{margin:0;color:var(--navy);font-size:22px;letter-spacing:-.02em}
     .section-head p{margin:6px 0 0;color:var(--muted);font-size:13px}
     .period-count{background:#e7eef5;color:var(--navy);padding:8px 12px;border-radius:30px;font-size:12px;font-weight:700;white-space:nowrap}
+    .search-wrap{margin:0 0 14px;max-width:440px}
+    .search-wrap input{width:100%;padding:12px 15px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font:inherit;font-size:13px;outline:none}
+    .search-wrap input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2f6f9f18}
     .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
     .period{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;align-items:center;gap:14px;min-height:91px;transition:.2s;box-shadow:0 3px 12px #183a5510}
     .period.available{cursor:pointer}
@@ -83,6 +86,7 @@
         <div><h2 id="period-title">Akses Informasi Cuti</h2><p>Pilih periode di bawah ini untuk membuka spreadsheet terkait.</p></div>
         <div class="period-count" id="count">1 tautan tersedia</div>
       </div>
+      <div class="search-wrap"><input id="search-period" type="search" placeholder="Cari nama periode cuti..." aria-label="Cari nama periode cuti"></div>
       <div class="grid" id="period-list"></div>
     </section>
 
@@ -110,12 +114,14 @@
     const API_URL = "https://script.google.com/macros/s/AKfycbzgwN8YgwF2gQr9oWEzfa3FnuaWuB3cuIy8LQ3fySLs9c6NHrtfivOaFLYf5NjH3KHl/exec";
 
     let periodeCuti = [];
+    let kataKunci = "";
 
     const iconCalendar = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>';
 
     function renderPeriode(){
       const list = document.getElementById("period-list");
       const valid = periodeCuti.filter(item => item.url && item.url.trim());
+      const hasil = periodeCuti.filter(item => (String(item.nama || "") + " " + String(item.keterangan || "")).toLowerCase().includes(kataKunci));
       document.getElementById("count").textContent = valid.length + " tautan tersedia";
       list.innerHTML = "";
 
@@ -124,7 +130,12 @@
         return;
       }
 
-      periodeCuti.forEach(item => {
+      if (hasil.length === 0) {
+        list.innerHTML = '<div class="period"><div class="period-info"><strong>Periode tidak ditemukan</strong><small>Coba gunakan kata kunci lain.</small></div></div>';
+        return;
+      }
+
+      hasil.forEach(item => {
         const hasLink = Boolean(item.url && item.url.trim());
         const card = document.createElement("a");
         card.className = "period" + (hasLink ? " available" : "");
@@ -179,6 +190,11 @@
       };
       document.body.appendChild(script);
     }
+
+    document.getElementById("search-period").addEventListener("input", function() {
+      kataKunci = this.value.trim().toLowerCase();
+      renderPeriode();
+    });
 
     muatDaftarLink();
   </script>
